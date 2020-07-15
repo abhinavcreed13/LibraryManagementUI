@@ -37,10 +37,36 @@ namespace LibraryManagementUI.DAL
                 new Customer { Name = "Customer5", Address="Add5", Contact="Conct5"}
             };
 
-            foreach(Customer customer in customers)
+            //foreach(Customer customer in customers)
+            //{
+            //    context.Customers.Add(customer);
+            //}
+
+            // delegate: function pointer
+            // Action delegate: void functions
+            void AddCustomer(Customer customer)
             {
                 context.Customers.Add(customer);
             }
+
+            Action<Customer> addCustomerDelegate = new Action<Customer>(AddCustomer);
+
+            customers.ForEach(customer => context.Customers.Add(customer));
+
+            //Func delegate: function will return something
+            int id = 56;
+            bool IsCustomerIdValid(Customer customer)
+            {
+                return customer.CustomerId == id;
+            }
+
+            //Predicate delegate
+            Func<Customer, bool> getCustomerIdDelegate = new Func<Customer, bool>(IsCustomerIdValid);
+
+            // Predicate delegate: Func<Customer,bool>
+
+            
+            customers.Find(customer => customer.CustomerId == id);
 
             //save in database
             context.SaveChanges();

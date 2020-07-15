@@ -36,5 +36,46 @@ namespace LibraryManagementUI.Controllers
 
             return View(book);
         }
+
+        public ActionResult Details(int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if(book == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
+            }
+            return View(book);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
+            }
+            return View(book);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Book book)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(book).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(book);
+        }
     }
 }

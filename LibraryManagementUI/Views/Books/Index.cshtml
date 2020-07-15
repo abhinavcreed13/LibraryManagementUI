@@ -45,8 +45,9 @@
                     @Html.DisplayFor(modelItem => book.Publisher)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", "Books", new { id = book.BookId }) |
-                    @Html.ActionLink("Delete", "Delete", "Books", new { id = book.BookId })
+                    @Html.ActionLink("Details", "Details", "Books", new { id = book.BookId }, new { }) |
+                    @Html.ActionLink("Edit", "Edit", "Books", new { id = book.BookId }, new { }) |
+                    @Html.ActionLink("Delete", "Delete", "Books", new { id = book.BookId }, new { })
                 </td>
             </tr>
         }
