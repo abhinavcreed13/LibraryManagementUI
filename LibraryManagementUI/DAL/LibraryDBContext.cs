@@ -16,6 +16,7 @@ namespace LibraryManagementUI.DAL
         }
         public DbSet<Book> Books { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<BorrowHistory> BorrowHistories { get; set; }
 
         //function overridding
         //virtual + override

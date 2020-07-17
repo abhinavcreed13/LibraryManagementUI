@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LibraryManagementUI.Models.Book>
+﻿@model IEnumerable<LibraryManagementUI.Models.BookViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -24,7 +24,10 @@
                 @Html.DisplayNameFor(model => model.Publisher)
             </th>
             <th>
-                Actions
+                Record Actions
+            </th>
+            <th>
+                Book Actions
             </th>
         </tr>
     </thead>
@@ -48,6 +51,16 @@
                     @Html.ActionLink("Details", "Details", "Books", new { id = book.BookId }, new { }) |
                     @Html.ActionLink("Edit", "Edit", "Books", new { id = book.BookId }, new { }) |
                     @Html.ActionLink("Delete", "Delete", "Books", new { id = book.BookId }, new { })
+                </td>
+                <td>
+                    @if (book.IsAvailable)
+                    {
+                        @Html.ActionLink("Borrow", "Create", "BorrowHistories", new { id = book.BookId }, new { @class = "btn btn-primary" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Return", "Edit", "BorrowHistories", new { id = book.BookId }, new { @class = "btn btn-success" })
+                    }
                 </td>
             </tr>
         }

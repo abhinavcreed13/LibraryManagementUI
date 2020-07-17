@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Web;
 
 namespace LibraryManagementUI.Models
 {
-    public class Book
+    public class BookViewModel
     {
         [Key]
         public int BookId { get; set; }
@@ -23,7 +22,6 @@ namespace LibraryManagementUI.Models
 
         public string Publisher { get; set; }
 
-        //Navigation properties
-        public ICollection<BorrowHistory> BorrowHistories { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

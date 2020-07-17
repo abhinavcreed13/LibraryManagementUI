@@ -2,6 +2,7 @@
 using LibraryManagementUI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,7 +16,19 @@ namespace LibraryManagementUI.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.Books.ToList());
+            //eager loading + navigation properties
+            var books = db.Books.Include(b => b.BorrowHistories);
+            // select linq
+            var availableBooks = books.Select(book => new BookViewModel
+            {
+                BookId = book.BookId,
+                Title = book.Title,
+                Author = book.Author,
+                Publisher = book.Publisher,
+                SerialNumber = book.SerialNumber,
+                IsAvailable = !book.BorrowHistories.Any(h => h.ReturnDate == null)
+            }).ToList();
+            return View(availableBooks);
         }
 
         //Get: Books/Create
