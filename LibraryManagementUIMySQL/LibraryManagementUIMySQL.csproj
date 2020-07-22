@@ -185,8 +185,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PhonebookConsoleApp\DataAccessLayer\DataAccessLayer.csproj">
-      <Project>{ee9d64f2-d8af-4ce5-b92b-f08564bffdb2}</Project>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{e4e014ff-0d24-4d70-9464-f24f571ef266}</Project>
       <Name>DataAccessLayer</Name>
     </ProjectReference>
   </ItemGroup>
