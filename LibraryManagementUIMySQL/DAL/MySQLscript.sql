@@ -47,7 +47,7 @@ INSERT INTO customer(Name,Address,Contact) VALUES
 ('Customer4','Add','Cont'),
 ('Customer5','Add','Cont');*/
 
-DELIMITER //
+/*DELIMITER //
 CREATE PROCEDURE GetAllBooks()
 BEGIN
 	Select * from book;
@@ -66,7 +66,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE GetAllCustomers()
 BEGIN
-	Select * from customers;
+	Select * from customer;
 END //
 
 DELIMITER ;
@@ -78,4 +78,19 @@ BEGIN
 END //
 
 DELIMITER ;
+*/
+
+DELIMITER //
+CREATE PROCEDURE GetAllBorrowHistories()
+BEGIN
+	select BorrowHistoryId, book.BookId, book.Title,
+    customer.CustomerId,
+    customer.Name,
+    BorrowDate, ReturnDate 
+    from borrowhistory
+    inner join book
+    on book.BookId = borrowhistory.BookId
+    inner join customer
+    on customer.CustomerId = borrowhistory.CustomerId;
+END //
 
