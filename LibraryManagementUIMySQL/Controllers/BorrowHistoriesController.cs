@@ -1,9 +1,11 @@
 ﻿using DataAccessLayer;
 using LibraryManagementUIMySQL.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,8 +14,8 @@ namespace LibraryManagementUIMySQL.Controllers
     public class BorrowHistoriesController : Controller
     {
         public static DataTable BorrowHistories;
-        // GET: BorrowHistories
-        public ActionResult Index()
+
+        public static void InitilizeBorrowHistories()
         {
             try
             {
@@ -24,8 +26,14 @@ namespace LibraryManagementUIMySQL.Controllers
             {
                 BorrowHistories = new DataTable();
             }
+        }
+
+        // GET: BorrowHistories
+        public ActionResult Index()
+        {
+            InitilizeBorrowHistories();
             List<BorrowHistory> borrowhistories = new List<BorrowHistory>();
-            foreach(DataRow dr in BorrowHistories.Rows)
+            foreach (DataRow dr in BorrowHistories.Rows)
             {
                 borrowhistories.Add(new BorrowHistory
                 {
@@ -34,7 +42,7 @@ namespace LibraryManagementUIMySQL.Controllers
                     Name = dr.Field<string>("Name"),
                     CustomerId = dr.Field<int>("CustomerId"),
                     BorrowDate = dr.Field<DateTime>("BorrowDate"),
-                    ReturnDate = dr.Field<DateTime?> ("ReturnDate")
+                    ReturnDate = dr.Field<DateTime?>("ReturnDate")
                 });
             }
             return View(borrowhistories);
@@ -47,22 +55,49 @@ namespace LibraryManagementUIMySQL.Controllers
         }
 
         // GET: BorrowHistories/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            return View();
+            var borrowHistory = new BorrowHistory
+            {
+                BookId = id,
+                BorrowDate = DateTime.Now
+            };
+            if (CustomersController.Customers == null)
+            {
+                CustomersController.InitilizeCustomer();
+            }
+            var customersData = CustomersController.Customers;
+            //DataTable
+            
+            var customers = customersData.AsEnumerable().Select(row => new Customer
+            {
+                CustomerId = row.Field<int>("CustomerId"),
+                Name = row.Field<string>("Name")
+            }).ToList();
+
+            ViewBag.CustomerId = new SelectList(customers, "CustomerId", "Name");
+            return View(borrowHistory);
         }
 
         // POST: BorrowHistories/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(BorrowHistory borrowHistory)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                //  mysql proc
+                MySQLDALManager manager = new MySQLDALManager("mySQLDbConnKey");
+                List<MySqlParameter> parameters = new List<MySqlParameter>
+                {
+                    new MySqlParameter("book_id", borrowHistory.BookId),
+                    new MySqlParameter("customer_id", borrowHistory.CustomerId),
+                    new MySqlParameter("borrow_date", borrowHistory.BorrowDate)
+                };
+                manager.ExecuteStoredProcedure("BorrowBook", parameters);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -71,20 +106,41 @@ namespace LibraryManagementUIMySQL.Controllers
         // GET: BorrowHistories/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            InitilizeBorrowHistories();
+            var borrowHistoryRow = BorrowHistories.AsEnumerable()
+                                        .Where(row => row.Field<int>("BookId") == id
+                                                  && row.Field<DateTime?>("ReturnDate") == null)
+                                            .FirstOrDefault();
+            if(borrowHistoryRow == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
+            }
+            var borrowHistory = new BorrowHistory
+            {
+                BorrowHistoryId = borrowHistoryRow.Field<int>("BorrowHistoryId"),
+                Title = borrowHistoryRow.Field<string>("Title"),
+                Name = borrowHistoryRow.Field<string>("Name"),
+                BorrowDate = borrowHistoryRow.Field<DateTime>("BorrowDate")
+            };
+            return View(borrowHistory);
         }
 
         // POST: BorrowHistories/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(BorrowHistory borrowHistory)
         {
             try
             {
                 // TODO: Add update logic here
-
+                MySQLDALManager manager = new MySQLDALManager("mySQLDbConnKey");
+                List<MySqlParameter> parameters = new List<MySqlParameter>
+                {
+                    new MySqlParameter("borrow_history_id", borrowHistory.BorrowHistoryId)
+                };
+                manager.ExecuteStoredProcedure("ReturnBook", parameters);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }

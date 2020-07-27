@@ -12,8 +12,8 @@ namespace LibraryManagementUIMySQL.Controllers
     public class CustomersController : Controller
     {
         public static DataTable Customers;
-        // GET: Customers
-        public ActionResult Index()
+
+        public static void InitilizeCustomer()
         {
             try
             {
@@ -24,8 +24,14 @@ namespace LibraryManagementUIMySQL.Controllers
             {
                 Customers = new DataTable();
             }
+        }
+
+        // GET: Customers
+        public ActionResult Index()
+        {
+            InitilizeCustomer();
             List<Customer> customers = new List<Customer>();
-            foreach(DataRow dr in Customers.Rows)
+            foreach (DataRow dr in Customers.Rows)
             {
                 customers.Add(new Customer
                 {
@@ -45,7 +51,7 @@ namespace LibraryManagementUIMySQL.Controllers
             DataRow foundRow = Customers.AsEnumerable()
                                     .Where(row => row.Field<int>("CustomerId") == id)
                                         .FirstOrDefault();
-            if(foundRow == null)
+            if (foundRow == null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }

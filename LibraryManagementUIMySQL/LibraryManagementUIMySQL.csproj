@@ -178,6 +178,8 @@
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\BorrowHistories\Index.cshtml" />
+    <Content Include="Views\BorrowHistories\Create.cshtml" />
+    <Content Include="Views\BorrowHistories\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

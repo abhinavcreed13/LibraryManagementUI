@@ -80,7 +80,7 @@ END //
 DELIMITER ;
 */
 
-DELIMITER //
+/*DELIMITER //
 CREATE PROCEDURE GetAllBorrowHistories()
 BEGIN
 	select BorrowHistoryId, book.BookId, book.Title,
@@ -93,4 +93,18 @@ BEGIN
     inner join customer
     on customer.CustomerId = borrowhistory.CustomerId;
 END //
+
+DELIMITER ;*/
+
+/*DELIMITER //
+CREATE PROCEDURE BorrowBook(book_id INT, customer_id INT, borrow_date DATETIME)
+BEGIN
+	Insert into borrowhistory(BookId, CustomerId, BorrowDate)
+    VALUES (book_id, customer_id, borrow_date);
+END //
+
+DELIMITER ;*/
+
+
+
 

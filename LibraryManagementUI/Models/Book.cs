@@ -22,7 +22,7 @@ namespace LibraryManagementUI.Models
         public string Author { get; set; }
 
         public string Publisher { get; set; }
-
+       
         //Navigation properties
         public ICollection<BorrowHistory> BorrowHistories { get; set; }
     }

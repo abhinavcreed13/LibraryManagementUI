@@ -28,6 +28,14 @@ namespace LibraryManagementUI.Controllers
                 SerialNumber = book.SerialNumber,
                 IsAvailable = !book.BorrowHistories.Any(h => h.ReturnDate == null)
             }).ToList();
+            
+            //Dictionary<string, string> dict = new Dictionary<string, string>();
+            //dict.Add("key1", "val1");
+            //var value = dict["key1"];
+
+            //List<Dictionary<string, string>> list_of_dicts = new List<Dictionary<string, string>>();
+
+            
             return View(availableBooks);
         }
 

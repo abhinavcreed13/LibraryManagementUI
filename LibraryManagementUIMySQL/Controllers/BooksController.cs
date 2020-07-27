@@ -30,6 +30,13 @@ namespace LibraryManagementUIMySQL.Controllers
             {
                 Books = new DataTable();
             }
+            //get data from borrowhistories
+            if (BorrowHistoriesController.BorrowHistories == null)
+            {
+                // fill that borrowhistory datatable
+                BorrowHistoriesController.InitilizeBorrowHistories();
+            }
+            var borrowHistoryData = BorrowHistoriesController.BorrowHistories;
             List<Book> books = new List<Book>();
             foreach(DataRow dr in Books.Rows)
             {
@@ -39,7 +46,10 @@ namespace LibraryManagementUIMySQL.Controllers
                     Title = dr.Field<string>("Title"),
                     Author = dr.Field<string>("Author"),
                     Publisher = dr.Field<string>("Publisher"),
-                    SerialNumber = dr.Field<string>("SerialNumber")
+                    SerialNumber = dr.Field<string>("SerialNumber"),
+                    IsAvailable = !borrowHistoryData.AsEnumerable()
+                                        .Any(row => row.Field<int>("BookId") == dr.Field<int>("BookId")
+                                                && row.Field<DateTime?>("ReturnDate") == null)
                 });
             }
             return View(books);

@@ -23,7 +23,8 @@
         <th>
             @Html.DisplayNameFor(model => model.Publisher)
         </th>
-        <th></th>
+        <th>Record Actions</th>
+        <th>Book Actions</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -44,6 +45,16 @@
             @Html.ActionLink("Edit", "Edit", new { id=item.BookId }) |
             @Html.ActionLink("Details", "Details", new { id=item.BookId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.BookId })
+        </td>
+        <td>
+            @if (item.IsAvailable)
+            {
+                @Html.ActionLink("Borrow", "Create", "BorrowHistories", new { id = item.BookId }, new { @class = "btn btn-primary" })
+            }
+            else
+            {
+                @Html.ActionLink("Return", "Edit", "BorrowHistories", new { id = item.BookId }, new { @class = "btn btn-success" })
+            }
         </td>
     </tr>
 }
