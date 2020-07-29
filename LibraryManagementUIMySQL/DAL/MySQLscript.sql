@@ -105,6 +105,14 @@ END //
 
 DELIMITER ;*/
 
+DELIMITER //
+CREATE PROCEDURE ReturnBook(borrow_history_id INT)
+BEGIN
+	Update borrowhistory
+    set ReturnDate = NOW()
+    where BorrowHistoryId = borrow_history_id;
+END //
 
+DELIMITER ;
 
 
