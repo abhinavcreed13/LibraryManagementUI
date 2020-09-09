@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementUIMySQLEF6", "LibraryManagementUIMySQLEF6\LibraryManagementUIMySQLEF6.csproj", "{042CE9A2-2B36-4893-93A5-52F6DFE26416}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementUICore", "LibraryManagementUICore\LibraryManagementUICore.csproj", "{64D1BE02-D32B-46E2-9C7C-6DC2F214DC8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{042CE9A2-2B36-4893-93A5-52F6DFE26416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{042CE9A2-2B36-4893-93A5-52F6DFE26416}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{042CE9A2-2B36-4893-93A5-52F6DFE26416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D1BE02-D32B-46E2-9C7C-6DC2F214DC8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D1BE02-D32B-46E2-9C7C-6DC2F214DC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D1BE02-D32B-46E2-9C7C-6DC2F214DC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D1BE02-D32B-46E2-9C7C-6DC2F214DC8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
